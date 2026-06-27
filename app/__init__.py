@@ -9,8 +9,9 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     experiences = [
-        {"company": "MLH", "role": "Fellow", "year": "2026"},
-        {"company": "Workday", "role": "Frontend Engineer", "year": "2025"}
+        {"company": "MLH", "role": "Fellow", "year": "2026", "description": "• Gaining hands-on experience in production engineering with Meta & Major Leage Hacking"},
+        {"company": "Workday", "role": "Software Engineer", "year": "2026", "description": "• Developed frontend architecture using Next.js and TypeScript"},
+        {"company": "HackEurope", "role": "Associate", "year": "2026", "description": "• Supporting Operations and Sponsor Engagement"}
     ]
 
     education = [
