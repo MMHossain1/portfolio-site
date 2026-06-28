@@ -15,7 +15,7 @@ def index():
     ]
 
     education = [
-        {"school": "Trinity College Dublin", "degree": "Computer Science", "year": "2024"}
+        {"university": "Trinity College Dublin", "degree": "Computer Science", "year": "2024"}
     ]
 
     hobbies = [
