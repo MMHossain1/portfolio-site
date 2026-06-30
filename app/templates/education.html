@@ -3,7 +3,7 @@
 
 {% block content %}
 <section class="page-section">
-  <h1 class="section-heading"><span class="num">03</span> Education</h1>
+  <h1 class="section-heading"><span class="num">04</span> Education</h1>
   <ul class="timeline">
     {% for ed in education %}
       <li class="timeline-item">
@@ -11,10 +11,31 @@
           <h2>{{ ed.degree }}</h2>
           <span class="dates">{{ ed.dates }}</span>
         </div>
-        <p class="school">{{ ed.school }}</p>
+        <p class="school">{{ ed.school }}{% if ed.location %} <span class="at">·</span> {{ ed.location }}{% endif %}</p>
         <p>{{ ed.summary }}</p>
       </li>
     {% endfor %}
   </ul>
 </section>
+
+{% if publications %}
+<section class="page-section">
+  <h2 class="section-heading"><span class="num">04b</span> Publications</h2>
+  <ul class="pub-list">
+    {% for pub in publications %}
+      <li class="pub-item">
+        <p class="pub-title">
+          {% if pub.url %}<a href="{{ pub.url }}" target="_blank" rel="noopener">{{ pub.title }}</a>{% else %}{{ pub.title }}{% endif %}
+        </p>
+        <p class="pub-meta">{{ pub.authors }} &nbsp;{{ pub.venue }}{% if pub.note %} <span class="pub-note">{{ pub.note }}</span>{% endif %}</p>
+      </li>
+    {% endfor %}
+  </ul>
+  {% if profile.scholar %}
+    <p class="prose"><a href="{{ profile.scholar }}" target="_blank" rel="noopener">Full list of publications on Google Scholar →</a></p>
+  {% else %}
+    <p class="prose">Full list of publications available on Google Scholar.</p>
+  {% endif %}
+</section>
+{% endif %}
 {% endblock %}

@@ -184,6 +184,65 @@ a:hover { text-decoration: underline; }
 }
 .school { font-weight: 500; margin: 0.2rem 0 0.4rem; }
 .timeline-item p { color: var(--ink-soft); margin: 0.4rem 0 0; }
+.timeline-item .meta {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin: 0.1rem 0 0.2rem;
+}
+
+/* Bulleted entry details (work, projects, honors) */
+.bullets {
+  margin: 0.6rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--ink-soft);
+}
+.bullets li { margin: 0 0 0.5rem; max-width: 64ch; }
+.bullets li:last-child { margin-bottom: 0; }
+
+.entry-link { margin: 0.6rem 0 0; }
+.entry-link a { font-size: 0.9rem; font-weight: 500; }
+
+/* ---------- Publications ---------- */
+.pub-list { list-style: none; margin: 0; padding: 0; }
+.pub-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.pub-item:last-child { border-bottom: none; }
+.pub-title { font-weight: 500; color: var(--ink); margin: 0 0 0.2rem; max-width: 70ch; }
+.pub-meta { font-size: 0.9rem; color: var(--ink-soft); margin: 0; }
+.pub-note {
+  display: inline-block;
+  margin-left: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* ---------- Skills ---------- */
+.skills { display: flex; flex-direction: column; gap: 1.6rem; }
+.skill-cat {
+  font-family: "Fraunces", serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 0 0.7rem;
+}
+.tag-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.tag {
+  background: #fbf9f4;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.32rem 0.85rem;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
 
 /* ---------- Hobby cards ---------- */
 .card-grid {

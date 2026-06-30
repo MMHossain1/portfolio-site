@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+<section class="page-section">
+  <h1 class="section-heading"><span class="num">03</span> Founding &amp; Projects</h1>
+  <ul class="timeline">
+    {% for project in projects %}
+      <li class="timeline-item">
+        <div class="timeline-head">
+          <h2>{{ project.name }}{% if project.role %} <span class="at">·</span> {{ project.role }}{% endif %}</h2>
+          <span class="dates">{{ project.dates }}</span>
+        </div>
+        {% if project.location %}<p class="meta">{{ project.location }}</p>{% endif %}
+        {% if project.bullets %}
+          <ul class="bullets">
+            {% for point in project.bullets %}<li>{{ point }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+        {% if project.link %}
+          <p class="entry-link"><a href="{{ project.link.url }}" target="_blank" rel="noopener">{{ project.link.label }} →</a></p>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

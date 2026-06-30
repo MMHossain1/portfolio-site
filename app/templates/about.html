@@ -10,4 +10,13 @@
     {% endfor %}
   </div>
 </section>
+
+{% if honors %}
+<section class="page-section">
+  <h2 class="section-heading"><span class="num">01b</span> Honors &amp; Awards</h2>
+  <ul class="bullets">
+    {% for honor in honors %}<li>{{ honor }}</li>{% endfor %}
+  </ul>
+</section>
+{% endif %}
 {% endblock %}

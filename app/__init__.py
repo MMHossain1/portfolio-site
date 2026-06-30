@@ -27,7 +27,9 @@ PAGES = [
     ("index", "Home"),
     ("about", "About"),
     ("work", "Work"),
+    ("projects", "Projects"),
     ("education", "Education"),
+    ("skills", "Skills"),
     ("hobbies", "Hobbies"),
     ("places", "Map"),
 ]
@@ -46,7 +48,7 @@ def index():
 
 @app.route("/about")
 def about():
-    return render_template("about.html", about=data.ABOUT)
+    return render_template("about.html", about=data.ABOUT, honors=data.HONORS)
 
 
 @app.route("/work")
@@ -54,9 +56,21 @@ def work():
     return render_template("work.html", work=data.WORK)
 
 
+@app.route("/projects")
+def projects():
+    return render_template("projects.html", projects=data.PROJECTS)
+
+
 @app.route("/education")
 def education():
-    return render_template("education.html", education=data.EDUCATION)
+    return render_template(
+        "education.html", education=data.EDUCATION, publications=data.PUBLICATIONS
+    )
+
+
+@app.route("/skills")
+def skills():
+    return render_template("skills.html", skills=data.SKILLS)
 
 
 @app.route("/hobbies")

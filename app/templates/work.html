@@ -11,7 +11,17 @@
           <h2>{{ job.role }} <span class="at">·</span> {{ job.org }}</h2>
           <span class="dates">{{ job.dates }}</span>
         </div>
-        <p>{{ job.summary }}</p>
+        {% if job.location %}<p class="meta">{{ job.location }}</p>{% endif %}
+        {% if job.bullets %}
+          <ul class="bullets">
+            {% for point in job.bullets %}<li>{{ point }}</li>{% endfor %}
+          </ul>
+        {% elif job.summary %}
+          <p>{{ job.summary }}</p>
+        {% endif %}
+        {% if job.link %}
+          <p class="entry-link"><a href="{{ job.link.url }}" target="_blank" rel="noopener">{{ job.link.label }} →</a></p>
+        {% endif %}
       </li>
     {% endfor %}
   </ul>
