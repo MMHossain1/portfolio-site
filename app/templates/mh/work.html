@@ -1,0 +1,36 @@
+{% extends "mh/base_mh.html" %}
+{% block title %}Work{% endblock %}
+
+{% block content %}
+<section class="page-section">
+  <h1 class="section-heading"><span class="num">02</span>Work</h1>
+  <ul class="timeline">
+    {% for job in work %}
+      <li class="timeline-item">
+        <div class="job-container">
+          <div class="job-details">
+            {% if job.logo %}
+              <img src="{{ url_for('static', filename=job.logo) }}" alt="{{ job.org }}" class="job-logo">
+            {% endif %}
+            <div class="job-text">
+              <h2>{{ job.role }}</h2>
+              <span class="job-meta">{{ job.org }}{% if job.location %} · {{ job.location }}{% endif %}</span>
+            </div>
+          </div>
+          <span class="dates">{{ job.dates }}</span>
+        </div>
+        {% if job.bullets %}
+          <ul class="bullets">
+            {% for point in job.bullets %}<li>{{ point }}</li>{% endfor %}
+          </ul>
+        {% elif job.summary %}
+          <p>{{ job.summary }}</p>
+        {% endif %}
+        {% if job.link %}
+          <p class="entry-link"><a href="{{ job.link.url }}" target="_blank" rel="noopener">{{ job.link.label }} →</a></p>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

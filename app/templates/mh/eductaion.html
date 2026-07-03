@@ -1,0 +1,25 @@
+{% extends "mh/base_mh.html" %}
+{% block title %}Education{% endblock %}
+
+{% block content %}
+<section class="page-section">
+  <h1 class="section-heading"><span class="num">04</span> Education</h1>
+  <div class="timeline">
+    {% for edu in education_mh %}
+      <div class="timeline-item">
+        <div class="timeline-date">{{ edu.dates }}</div>
+        <div class="timeline-content">
+          <h3>{{ edu.school }}</h3>
+          <p class="timeline-subtitle">{{ edu.degree }}</p>
+          {% if edu.summary %}<p class="timeline-summary">{{ edu.summary }}</p>{% endif %}
+          {% if edu.bullets %}
+            <ul class="edu-bullets">
+              {% for bullet in edu.bullets %}<li>{{ bullet }}</li>{% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
