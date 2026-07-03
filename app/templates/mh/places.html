@@ -1,0 +1,44 @@
+{% extends "mh/base_mh.html" %}
+{% block title %}Map{% endblock %}
+
+{% block head_extra %}
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+{% endblock %}
+
+{% block content %}
+<section class="page-section">
+  <h1 class="section-heading"><span class="num">07</span> Places</h1>
+  <p class="prose">Cities I've lived in, studied in, or keep coming back to.</p>
+  <div id="map"></div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    // Places come from the Flask data layer, rendered into JSON by Jinja.
+    const places = {{ places | tojson }};
+
+    const map = L.map('map');
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const markers = [];
+    places.forEach(p => {
+      const m = L.marker([p.lat, p.lng]).addTo(map);
+      m.bindPopup('<strong>' + p.name + '</strong><br>' + p.note);
+      markers.push(m);
+    });
+
+    if (markers.length) {
+      const group = L.featureGroup(markers);
+      map.fitBounds(group.getBounds().pad(0.2));
+    } else {
+      map.setView([20, 0], 2);
+    }
+  </script>
+{% endblock %}

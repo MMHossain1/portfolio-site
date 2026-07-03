@@ -1,0 +1,40 @@
+{% extends "mh/base_mh.html" %}
+{% block title %}{{ profile_mh.name }}{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero-photo">
+    <img src="{{ url_for('static', filename=profile_mh.photo) }}" alt="{{ profile_mh.name }}">
+  </div>
+  <div>
+    <div class="eyebrow">{{ profile_mh.location }}</div>
+    <h1>{{ profile_mh.name }}</h1>
+    <p class="tagline">{{ profile_mh.tagline }}</p>
+    <p class="blurb">{{ profile_mh.blurb }}</p>
+    <div class="cta-buttons">
+      <a href="{{ url_for('mh_projects') }}" class="btn btn-primary">See my work</a>
+      <a href="{{ url_for('mh_places') }}" class="btn btn-secondary">Where I've been</a>
+    </div>
+  </div>
+</section>
+
+{% if about_mh %}
+<section class="page-section">
+  <h2 class="section-heading"><span class="num">01</span>About</h2>
+  <div class="prose">
+    <p>{{ about_mh[0] }}</p>
+  </div>
+  <a href="{{ url_for('mh_about') }}" class="read-more">Read more →</a>
+</section>
+{% endif %}
+
+{% if projects %}
+<section class="page-section">
+  <h2 class="section-heading"><span class="num">02</span>Work</h2>
+  <div class="prose">
+    <p>{{ work[0].role }} at {{ work[0].org }}</p>
+  </div>
+  <a href="{{ url_for('mh_work') }}" class="read-more">View all →</a>
+</section>
+{% endif %}
+{% endblock %}

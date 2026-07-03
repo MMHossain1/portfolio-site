@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ profile_mh.name }}{% endblock %} · Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style_mh.css') }}">
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand brand-link" href="{{ url_for('index') }}">
+      <img src="{{ url_for('static', filename='img/profile.jpg') }}" alt="Gabriela Sierocka profile" class="brand-avatar">
+      <span>Switch to Gabriela Sierocka</span>
+    </a>
+    <nav class="nav">
+      {# Loops over PAGES_MH from the app, so the menu updates itself. #}
+      {% for endpoint, label in pages_mh %}
+        <a href="{{ url_for(endpoint) }}"
+           class="nav-link {% if request.endpoint == endpoint %}active{% endif %}">
+          {{ label }}
+        </a>
+      {% endfor %}
+    </nav>
+  </header>
+
+  <main class="content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-info">{{ profile_mh.location }}</div>
+    <div class="footer-social">
+      <a href="mailto:{{ profile_mh.email }}" class="social-link" title="Email">
+        <i class="fas fa-envelope"></i>
+      </a>
+      <a href="{{ profile_mh.github }}" class="social-link" title="GitHub" target="_blank">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="{{ profile_mh.linkedin }}" class="social-link" title="LinkedIn" target="_blank">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </div>
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

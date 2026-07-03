@@ -1,0 +1,21 @@
+{% extends "mh/base_mh.html" %}
+{% block title %}Hobbies{% endblock %}
+
+{% block content %}
+<section class="page-section">
+  <h1 class="section-heading"><span class="num">06</span> Hobbies</h1>
+  <div class="card-grid">
+    {% for hobby in hobbies %}
+      <article class="card">
+        <div class="card-img">
+          <img src="{{ url_for('static', filename=hobby.img) }}"
+               alt="{{ hobby.name }}"
+               onerror="this.classList.add('img-missing'); this.alt='Add {{ hobby.img }}';">
+        </div>
+        <h2>{{ hobby.name }}</h2>
+        <p>{{ hobby.blurb }}</p>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "mh/base_mh.html" %}
+{% block title %}About{% endblock %}
+
+{% block content %}
+<section class="page-section">
+  <h1 class="section-heading"><span class="num">01</span>About</h1>
+  <div class="prose">
+    {% for para in about_mh %}
+      <p>{{ para }}</p>
+    {% endfor %}
+  </div>
+</section>
+
+{% if honors_mh %}
+<section class="page-section">
+  <h2 class="section-heading"><span class="num">01b</span>Honors & Awards</h2>
+  <ul class="honors-list">
+    {% for honor in honors_mh %}
+      <li>{{ honor }}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+{% endblock %}

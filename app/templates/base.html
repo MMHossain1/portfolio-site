@@ -12,7 +12,10 @@
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="{{ url_for('index') }}">{{ profile.name }}</a>
+    <a class="brand brand-link" href="{{ url_for('mh_home') }}">
+      <img src="{{ url_for('static', filename='img/mh/profile_zoom.png') }}" alt="Mohammed Hossain profile" class="brand-avatar">
+      <span>Switch to Mohammed Hossain</span>
+    </a>
     <nav class="nav">
       {# Loops over PAGES from the app, so the menu updates itself. #}
       {% for endpoint, label in pages %}
