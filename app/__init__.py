@@ -7,15 +7,63 @@ This satisfies "Add a menu bar that dynamically displays other pages in the app"
 """
 
 import os
+import datetime
 
 from dotenv import load_dotenv
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from peewee import *
+from playhouse.shortcuts import model_to_dict
 
 from . import data, data_mh
 
 load_dotenv()
 
 app = Flask(__name__)
+
+my_db = MySQLDatabase(os.getenv("MYSQL_DATABASE"),
+            user=os.getenv("MYSQL_USER"), 
+            password=os.getenv("MYSQL_PASSWORD"), 
+            host=os.getenv("MYSQL_HOST"),
+            port=3306
+        )
+
+print(my_db)
+
+class TimelinePost(Model):
+    name = CharField()
+    email = CharField()
+    content = TextField()
+    created_at = DateTimeField(default=datetime.datetime.now)
+
+    class Meta:
+        database = my_db
+
+my_db.connect()
+my_db.create_tables([TimelinePost])
+
+@app.route('/api/timeline_post', methods=['POST'])
+def post_timeline_post():
+    name = request.form.get('name')
+    email = request.form.get('email')
+    content = request.form.get('content')
+
+    timeline_post = TimelinePost.create(name=name, email=email, content=content)
+    return model_to_dict(timeline_post)
+
+
+@app.route('/api/timeline_post', methods=['GET'])
+def get_timeline_post():
+    timeline_posts = TimelinePost.select().order_by(TimelinePost.created_at.desc())
+    return {"timeline_posts": [model_to_dict(post) for post in timeline_posts]}
+
+
+@app.route('/api/timeline_post/<int:post_id>', methods=['DELETE'])
+def delete_timeline_post(post_id):
+    deleted_count = TimelinePost.delete_by_id(post_id)
+    if deleted_count:
+        return {"ok": True, "deleted_id": post_id}
+    return {"ok": False, "error": "Timeline post not found", "deleted_id": post_id}, 404
+
 
 # Anything secret/configurable comes from the environment, never hardcoded.
 # See example.env. This satisfies the "use environment variables" tip.
