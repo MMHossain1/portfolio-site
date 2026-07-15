@@ -110,7 +110,7 @@ def inject_globals():
 
 @app.route("/")
 def index():
-    return redirect(url_for("mh_home"))
+    return render_template("mh/home.html", profile_mh=data_mh.PROFILE, about_mh=data_mh.ABOUT, work=data_mh.WORK)
 
 @app.route('/mh/timeline')
 def timeline():
