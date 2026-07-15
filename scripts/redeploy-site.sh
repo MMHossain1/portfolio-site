@@ -8,4 +8,5 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
-tmux new-session -d -s flask "cd $(pwd) && source .venv/bin/activate && export FLASK_APP=app && flask run"
+tmux new -s new-sever
+flask run --host=0.0.0.0
