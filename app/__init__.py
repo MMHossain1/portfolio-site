@@ -41,6 +41,10 @@ class TimelinePost(Model):
 my_db.connect()
 my_db.create_tables([TimelinePost])
 
+@app.route('/timeline')
+def timeline():
+    return render_template('timeline.html', title="Timeline")
+
 @app.route('/api/timeline_post', methods=['POST'])
 def post_timeline_post():
     name = request.form.get('name')
@@ -80,6 +84,7 @@ PAGES = [
     ("skills", "Skills"),
     ("hobbies", "Hobbies"),
     ("places", "Map"),
+    ("timeline", "Timeline"),
 ]
 
 # Mohammed Hossain pages

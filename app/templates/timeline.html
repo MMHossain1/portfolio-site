@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Timeline{% endblock %}
+
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style_mh.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="timeline-min">
+  <h1>Timeline</h1>
+  <p>Add a post and it will appear below.</p>
+
+  <form id="timeline-form" class="timeline-form-min">
+    <label for="name">Name</label>
+    <input id="name" name="name" type="text" required>
+
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" required>
+
+    <label for="content">Content</label>
+    <textarea id="content" name="content" rows="4" required></textarea>
+
+    <button type="submit">Post</button>
+  </form>
+
+  <h2>Posts</h2>
+  <ul id="timeline-posts" class="timeline-posts-min"></ul>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/spark-md5/3.0.2/spark-md5.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  const form = document.getElementById("timeline-form");
+  const postsList = document.getElementById("timeline-posts");
+
+  function gravatar(email) {
+    const cleanEmail = (email || "").trim().toLowerCase();
+    const hash = SparkMD5.hash(cleanEmail);
+    return `https://www.gravatar.com/avatar/${hash}?d=identicon&s=64`;
+  }
+
+  function renderPosts(posts) {
+    postsList.innerHTML = "";
+
+    posts.forEach((post) => {
+      const item = document.createElement("li");
+      const time = post.created_at ? new Date(post.created_at).toLocaleString() : "";
+      item.innerHTML = `
+        <img src="${gravatar(post.email)}" alt="${post.name} avatar">
+        <div>
+          <strong>${post.name}</strong> (${post.email})
+          <p>${post.content}</p>
+          <small>${time}</small>
+        </div>
+      `;
+      postsList.appendChild(item);
+    });
+  }
+
+  async function loadPosts() {
+    const response = await fetch("/api/timeline_post");
+    const data = await response.json();
+    renderPosts(data.timeline_posts || []);
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    await fetch("/api/timeline_post", {
+      method: "POST",
+      body: formData,
+    });
+
+    form.reset();
+    await loadPosts();
+  });
+
+  loadPosts();
+</script>
+{% endblock %}
