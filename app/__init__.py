@@ -8,6 +8,7 @@ This satisfies "Add a menu bar that dynamically displays other pages in the app"
 
 import os
 import datetime
+import importlib
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -16,6 +17,9 @@ from peewee import *
 from playhouse.shortcuts import model_to_dict
 
 from . import data, data_mh
+
+pymysql = importlib.import_module("pymysql")
+pymysql.install_as_MySQLdb()
 
 # Always load .env from the project root, even when Flask is started elsewhere.
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
