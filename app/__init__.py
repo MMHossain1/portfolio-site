@@ -18,62 +18,62 @@ from playhouse.shortcuts import model_to_dict
 
 from . import data, data_mh
 
-pymysql = importlib.import_module("pymysql")
-pymysql.install_as_MySQLdb()
+# pymysql = importlib.import_module("pymysql")
+# pymysql.install_as_MySQLdb()
 
-# Always load .env from the project root, even when Flask is started elsewhere.
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-load_dotenv(PROJECT_ROOT / ".env")
+# # Always load .env from the project root, even when Flask is started elsewhere.
+# PROJECT_ROOT = Path(__file__).resolve().parents[1]
+# load_dotenv(PROJECT_ROOT / ".env")
 
 app = Flask(__name__)
 
-mysql_database = os.getenv("MYSQL_DATABASE")
-if not mysql_database:
-    raise RuntimeError("MYSQL_DATABASE is not set. Create .env from example.env and fill MYSQL_* values.")
+# mysql_database = os.getenv("MYSQL_DATABASE")
+# if not mysql_database:
+#     raise RuntimeError("MYSQL_DATABASE is not set. Create .env from example.env and fill MYSQL_* values.")
 
-my_db = MySQLDatabase(mysql_database,
-            user=os.getenv("MYSQL_USER"), 
-            password=os.getenv("MYSQL_PASSWORD"), 
-            host=os.getenv("MYSQL_HOST"),
-            port=3306
-        )
+# my_db = MySQLDatabase(mysql_database,
+#             user=os.getenv("MYSQL_USER"), 
+#             password=os.getenv("MYSQL_PASSWORD"), 
+#             host=os.getenv("MYSQL_HOST"),
+#             port=3306
+#         )
 
-print(my_db)
+# print(my_db)
 
-class TimelinePost(Model):
-    name = CharField()
-    email = CharField()
-    content = TextField()
-    created_at = DateTimeField(default=datetime.datetime.now)
+# class TimelinePost(Model):
+#     name = CharField()
+#     email = CharField()
+#     content = TextField()
+#     created_at = DateTimeField(default=datetime.datetime.now)
 
-    class Meta:
-        database = my_db
+#     class Meta:
+#         database = my_db
 
-my_db.connect()
-my_db.create_tables([TimelinePost])
+# my_db.connect()
+# my_db.create_tables([TimelinePost])
 
-@app.route('/api/timeline_post', methods=['POST'])
-def post_timeline_post():
-    name = request.form.get('name')
-    email = request.form.get('email')
-    content = request.form.get('content')
+# @app.route('/api/timeline_post', methods=['POST'])
+# def post_timeline_post():
+#     name = request.form.get('name')
+#     email = request.form.get('email')
+#     content = request.form.get('content')
 
-    timeline_post = TimelinePost.create(name=name, email=email, content=content)
-    return model_to_dict(timeline_post)
-
-
-@app.route('/api/timeline_post', methods=['GET'])
-def get_timeline_post():
-    timeline_posts = TimelinePost.select().order_by(TimelinePost.created_at.desc())
-    return {"timeline_posts": [model_to_dict(post) for post in timeline_posts]}
+#     timeline_post = TimelinePost.create(name=name, email=email, content=content)
+#     return model_to_dict(timeline_post)
 
 
-@app.route('/api/timeline_post/<int:post_id>', methods=['DELETE'])
-def delete_timeline_post(post_id):
-    deleted_count = TimelinePost.delete_by_id(post_id)
-    if deleted_count:
-        return {"ok": True, "deleted_id": post_id}
-    return {"ok": False, "error": "Timeline post not found", "deleted_id": post_id}, 404
+# @app.route('/api/timeline_post', methods=['GET'])
+# def get_timeline_post():
+#     timeline_posts = TimelinePost.select().order_by(TimelinePost.created_at.desc())
+#     return {"timeline_posts": [model_to_dict(post) for post in timeline_posts]}
+
+
+# @app.route('/api/timeline_post/<int:post_id>', methods=['DELETE'])
+# def delete_timeline_post(post_id):
+#     deleted_count = TimelinePost.delete_by_id(post_id)
+#     if deleted_count:
+#         return {"ok": True, "deleted_id": post_id}
+#     return {"ok": False, "error": "Timeline post not found", "deleted_id": post_id}, 404
 
 
 # The navbar renders from this list. (endpoint, label) pairs.
