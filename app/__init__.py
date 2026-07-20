@@ -87,7 +87,6 @@ PAGES = [
     ("skills", "Skills"),
     ("hobbies", "Hobbies"),
     ("places", "Map"),
-    ("timeline", "Timeline"),
 ]
 
 # Mohammed Hossain pages
@@ -100,6 +99,7 @@ PAGES_MH = [
     ("mh_skills", "Skills"),
     ("mh_hobbies", "Hobbies"),
     ("mh_places", "Map"),
+    ("timeline", "Timeline"),
 ]
 
 
@@ -110,11 +110,11 @@ def inject_globals():
 
 @app.route("/")
 def index():
-    return render_template("mh/home.html", profile_mh=data_mh.PROFILE, about_mh=data_mh.ABOUT, work=data_mh.WORK)
+    return render_template("index.html", about=data.ABOUT)
 
 @app.route('/mh/timeline')
 def timeline():
-    return render_template('timeline.html', title="Timeline")
+    return render_template('mh/timeline.html', title="Timeline")
 
 @app.route("/mh/home")
 def mh_home():

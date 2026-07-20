@@ -42,5 +42,14 @@
   </footer>
 
   {% block scripts %}{% endblock %}
+  {% if request.endpoint == "index" %}
+    <script>
+      const firstLoadKey = "mh_initial_redirect_done";
+      if (!sessionStorage.getItem(firstLoadKey)) {
+        sessionStorage.setItem(firstLoadKey, "1");
+        window.location.replace("{{ url_for('mh_home') }}");
+      }
+    </script>
+  {% endif %}
 </body>
 </html>
