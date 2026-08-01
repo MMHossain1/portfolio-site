@@ -1,11 +1,4 @@
 #!/usr/bin/env python3
-"""Find 5-letter dictionary words that match a Wordle-style pattern.
-
-Use '_' for unknown letters.
-Examples:
-- a__le
-- _r__e
-"""
 
 from __future__ import annotations
 
@@ -48,6 +41,7 @@ def find_dictionary_file(provided_path: str | None) -> str:
 
     if os.path.isfile(DEFAULT_WORD_LIST_PATH):
         return DEFAULT_WORD_LIST_PATH
+    
 
     raise FileNotFoundError(
         "Could not find a dictionary file. Provide one with --dict, "
