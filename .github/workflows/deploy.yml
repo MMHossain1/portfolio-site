@@ -29,7 +29,9 @@ jobs:
           SSH_IP: ${{ secrets.SSH_IP }}
 
       - name: Deploy site
-        run: ssh my-vps 'cd /root/portfolio-site && bash redeploy-site.sh'
+        run: |
+          ssh my-vps 'cd /root/portfolio-site && bash redeploy-site.sh'
+          curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content=🚀 Deployment Successful"
 
 
 
