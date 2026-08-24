@@ -143,7 +143,7 @@ def mh_work():
 
 @app.route("/mh/education")
 def mh_education():
-    return render_template("mh/education.html", education_mh=data_mh.EDUCATION)
+    return render_template("mh/eductaion.html", education_mh=data_mh.EDUCATION)
 
 
 @app.route("/mh/skills")
